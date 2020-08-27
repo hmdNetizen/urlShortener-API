@@ -25,12 +25,48 @@ const theme = createMuiTheme({
       blue: darkBlue,
       darkViolet: vDarkViolet,
     },
+    error: {
+      main: red,
+    },
+    background: {
+      paper: "#fff",
+      default: "#fff",
+    },
   },
   typography: {
     fontFamily: "Poppins",
     htmlFont: 18,
+    h1: {
+      fontSize: "3rem",
+      fontWeight: 700,
+    },
+    h6: {
+      fontSize: "1.2rem",
+    },
+    body1: {
+      fontSize: "1rem",
+    },
+
+    btn: {
+      minWidth: 100,
+      textTransform: "none",
+      background: cyan,
+      color: "#fff",
+      fontWeight: 500,
+      maxHeight: 40,
+    },
   },
   shadows: ["none"],
+  overrides: {
+    MuiInput: {
+      input: {
+        "&::placeholder": {
+          color: red,
+        },
+        color: "#000", // if you also want to change the color of the input, this is the prop you'd use
+      },
+    },
+  },
 });
 
 export default theme;

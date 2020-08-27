@@ -20,8 +20,8 @@ import logo from "../../images/logo.svg";
 const useStyles = makeStyles((theme) => ({
   appBar: {
     background: "#fff",
-    paddingLeft: "10em",
-    paddingRight: "10em",
+    paddingLeft: "7em",
+    paddingRight: "7em",
     zIndex: theme.zIndex.modal + 1,
 
     [theme.breakpoints.down("md")]: {
@@ -74,13 +74,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.darkViolet,
   },
   signupBtn: {
+    ...theme.typography.btn,
     borderRadius: 50,
-    minWidth: 100,
-    textTransform: "none",
-    background: theme.palette.common.cyan,
-    color: "#fff",
-    fontWeight: 700,
-    maxHeight: 40,
     marginLeft: "2em",
 
     "&:hover": {
@@ -119,14 +114,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     paddingTop: "1.5em",
     paddingBottom: "1.5em",
+    display: "block",
     [theme.breakpoints.down("sm")]: {
       padding: "1.5em 0",
     },
     [theme.breakpoints.down("xs")]: {
-      "&:nth-child(3)": {
-        borderBottom: `1px solid ${theme.palette.common.gViolet}`,
-        marginBottom: "2em",
-      },
+      //   "&:nth-child(3)": {
+      //     borderBottom: `1px solid ${theme.palette.common.gViolet}`,
+      //     marginBottom: "2em",
+      //   },
       padding: "1em 0",
     },
   },
@@ -134,6 +130,10 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTypography-body1": {
       fontSize: "1.2rem",
     },
+  },
+
+  listItemSelected: {
+    background: theme.palette.primary.dark,
   },
 
   drawerButton: {
@@ -242,10 +242,16 @@ const Header = () => {
               divider={!matchesXS}
               className={classes.listItem}
               onClick={() => setOpenDrawer(false)}
+              selected={value === navTab.id}
+              classes={{ selected: classes.listItemSelected }}
             >
               <ListItemText
                 className={classes.listItemText}
-                style={{ color: "#fff", fontSize: "2rem" }}
+                style={{
+                  color:
+                    value === navTab.id ? "#fff" : theme.palette.common.gViolet,
+                  fontSize: "2rem",
+                }}
               >
                 {navTab.title}
               </ListItemText>
