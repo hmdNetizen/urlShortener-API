@@ -40,11 +40,28 @@ const theme = createMuiTheme({
       fontSize: "3rem",
       fontWeight: 700,
     },
+    h2: {
+      fontSize: "2rem",
+      fontWeight: 700,
+      color: vDarkViolet,
+    },
+    h3: {
+      fontSize: "1.5rem",
+      fontWeight: 700,
+      color: vDarkViolet,
+    },
     h6: {
       fontSize: "1.2rem",
     },
     body1: {
       fontSize: "1rem",
+      color: gray,
+    },
+    body2: {
+      fontSize: ".9rem",
+      color: "#777",
+      fontWeight: 500,
+      lineHeight: 1.7,
     },
 
     btn: {

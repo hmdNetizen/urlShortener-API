@@ -3,11 +3,20 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Paper from "@material-ui/core/Paper";
+import Avatar from "@material-ui/core/Avatar";
+import Divider from "@material-ui/core/Divider";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import bgIllustration from "../../images/illustration-working.svg";
 import Form from "../Form";
-import ShortenedUrlItem from "../ShortenedUrlItem";
+
+import bgIllustration from "../../images/illustration-working.svg";
+import brandIcon from "../../images/icon-brand-recognition.svg";
+import detailedIcon from "../../images/icon-detailed-records.svg";
+import customizableIcon from "../../images/icon-fully-customizable.svg";
+import bgBoostDesktop from "../../images/bg-boost-desktop.svg";
+import bgBoostMobile from "../../images/bg-boost-mobile.svg";
+
 const useStyles = makeStyles((theme) => ({
   topSectionContainer: {
     marginLeft: "8em",
@@ -61,15 +70,107 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: "8em",
     paddingLeft: "8em",
     paddingTop: "7em",
-    marginBottom: "10em",
-    height: "50em",
+    paddingBottom: "7em",
     position: "relative",
+    maxWidth: "100%",
+
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: "4em",
+      paddingRight: "4em",
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "2.5em",
+      paddingRight: "2.5em",
+      paddingTop: "10em",
+    },
+
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1.8em",
+      paddingRight: "1.8em",
+    },
+  },
+  paper: {
+    padding: "3em 1.5em 2em",
+    width: "25em",
+    minWidth: "25em",
+    maxWidth: "30em",
+    height: "20em",
+    position: "relative",
+    zIndex: "9",
+    margin: "0 auto",
+
+    [theme.breakpoints.down("md")]: {
+      minWidth: "30em",
+    },
+
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      minWidth: "100%",
+      minHeight: "20em",
+    },
+  },
+  icon: {
+    background: theme.palette.common.violet,
+    width: 80,
+    height: 80,
+    padding: "1em",
+    position: "absolute",
+    top: -40,
+    left: 40,
+
+    [theme.breakpoints.down("sm")]: {
+      left: "50%",
+      transform: "translateX(-50%)",
+    },
+  },
+  cardHeader: {
+    marginTop: "1.5em",
+    marginBottom: ".75em",
+
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
+    },
+
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1rem",
+    },
+  },
+  cyanBorder: {
+    width: "40em",
+    height: 10,
+    background: "cyan",
+    position: "absolute",
+    top: "10em",
+    left: "50%",
+    transform: "translateX(-50%)",
+
+    [theme.breakpoints.down("sm")]: {
+      top: "50%",
+      transform: "translate(-50%, -50%) rotate(-90deg)",
+    },
+  },
+  bottomGridContainer: {
+    paddingTop: "5em",
+    paddingBottom: "5em",
+    backgroundColor: theme.palette.common.violet,
+    backgroundImage: `url(${bgBoostDesktop})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+
+    [theme.breakpoints.down("sm")]: {
+      backgroundImage: `url(${bgBoostMobile})`,
+      backgroundSize: "cover",
+      backgroundPosition: "left",
+    },
   },
 }));
 
 const Homepage = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
@@ -143,6 +244,144 @@ const Homepage = () => {
         className={classes.formParentContainer}
       >
         <Form />
+        <Grid
+          item
+          container
+          direction="column"
+          style={{ marginTop: "3.5em", marginBottom: "5em" }}
+        >
+          <Grid item style={{ textAlign: "center" }}>
+            <Typography variant="h2" gutterBottom>
+              Advanced Statistics
+            </Typography>
+          </Grid>
+          <Grid item style={{ textAlign: "center" }}>
+            <Typography variant="body2" paragraph>
+              Track how your links are performing across the web with <br /> our
+              advanced statistics dashboard.
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid
+          item
+          container
+          direction={matchesSM ? "column" : "row"}
+          justify={matchesSM ? "center" : undefined}
+          style={{ position: "relative" }}
+        >
+          <Grid item md>
+            <Paper classes={{ root: classes.paper }}>
+              <Grid container direction="column" justify="space-between">
+                <Grid item>
+                  <Avatar
+                    size={20}
+                    src={brandIcon}
+                    alt="BrandIcon"
+                    className={classes.icon}
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography variant="h3" className={classes.cardHeader}>
+                    Brand Recognition
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body2">
+                    Boost your brand recognition with each click. Generic links
+                    don’t mean a thing. Branded links help instil confidence in
+                    your content.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          <Grid item md>
+            <Paper
+              style={{
+                marginRight: matchesSM ? "auto" : "2em",
+                marginLeft: matchesSM ? "auto" : "2em",
+                marginTop: matchesSM ? "7em" : matchesMD ? 0 : "2.5em",
+              }}
+              classes={{ root: classes.paper }}
+            >
+              <Grid container direction="column">
+                <Grid item>
+                  <Avatar
+                    src={detailedIcon}
+                    alt="Detailed Icon"
+                    className={classes.icon}
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography variant="h3" className={classes.cardHeader}>
+                    Detailed Records
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body2">
+                    Gain insights into who is clicking your links. Knowing when
+                    and where people engage with your content helps inform
+                    better decisions.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          <Grid item md>
+            <Paper
+              classes={{ root: classes.paper }}
+              style={{ marginTop: matchesMD ? "7em" : "5em" }}
+            >
+              <Grid container direction="column">
+                <Grid item>
+                  <Avatar
+                    src={customizableIcon}
+                    alt="Customizable Icon"
+                    className={classes.icon}
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography variant="h3" className={classes.cardHeader}>
+                    Fully Customizable
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body2">
+                    Improve brand awareness and content discoverability through
+                    customizable links, supercharging audience engagement.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          <Divider
+            orientation={matchesSM ? "vertical" : "horizontal"}
+            className={classes.cyanBorder}
+          />
+        </Grid>
+      </Grid>
+      <Grid
+        item
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        className={classes.bottomGridContainer}
+      >
+        <Grid item>
+          <Typography
+            variant="h3"
+            gutterBottom
+            style={{ color: "#fff", marginBottom: "1em" }}
+          >
+            Boost your links today
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" className={classes.btn}>
+            Get Started
+          </Button>
+        </Grid>
       </Grid>
     </Grid>
   );

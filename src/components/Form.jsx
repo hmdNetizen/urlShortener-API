@@ -13,6 +13,7 @@ import ShortenedUrl from "./ShortenedUrl";
 const Form = () => {
   const [alert, setAlert] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
+  const [existingUrl, setExistingUrl] = useState("");
 
   const useStyles = makeStyles((theme) => ({
     inputContainer: {
@@ -21,19 +22,37 @@ const Form = () => {
       backgroundSize: "cover",
       height: "10em",
       position: "absolute",
-      width: "84%",
+      width: "83.5%",
       left: "50%",
       top: "-5em",
       transform: "translateX(-50%)",
       borderRadius: 5,
+
+      [theme.breakpoints.down("md")]: {
+        width: "90%",
+      },
+
+      [theme.breakpoints.down("sm")]: {
+        height: "13em",
+      },
     },
     form: {
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-between",
       width: "100%",
       paddingLeft: "5em",
       paddingRight: "5em",
+
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column",
+        paddingLeft: "2.5em",
+        paddingRight: "2.5em",
+      },
+
+      [theme.breakpoints.down("xs")]: {
+        paddingLeft: "1.5em",
+        paddingRight: "1.5em",
+      },
     },
     inputBtn: {
       ...theme.typography.btn,
@@ -45,13 +64,22 @@ const Form = () => {
       "&:hover": {
         background: theme.palette.secondary.light,
       },
+
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: 0,
+        marginTop: "1em",
+      },
     },
     formInput: {
       border: "none",
+      borderRadius: 5,
       background: "#fff",
 
       "&::placeholder": {
-        color: isInvalid || alert ? theme.palette.common.red : undefined,
+        color:
+          isInvalid || alert || existingUrl
+            ? theme.palette.common.red
+            : undefined,
       },
     },
     helperText: {
@@ -85,33 +113,39 @@ const Form = () => {
     }
   };
 
-  const handleUrlShortener = async (inputUrl) => {
-    setLoading(true);
-    let response;
-    try {
-      response = await axios.post("https://rel.ink/api/links/", {
-        url: inputUrl,
-      });
-      setUrl([response.data, ...url]);
-    } catch (err) {
-      console.error(err);
-    }
-    setLoading(false);
+  const findExistingUrl = () => {
+    return url.length > 0 && url.some((link) => value === link.url);
   };
 
-  const findExistingUrl = () => {
-    return url.some((link) => link.url);
+  const handleUrlShortener = async (inputUrl) => {
+    let exist = findExistingUrl();
+    let response;
+
+    if (exist) {
+      setExistingUrl("Link already exist");
+    } else {
+      setLoading(true);
+      try {
+        response = await axios.post("https://rel.ink/api/links/", {
+          url: inputUrl,
+        });
+        setUrl([response.data, ...url]);
+      } catch (err) {
+        console.error(err);
+      }
+      setLoading(false);
+      setExistingUrl("");
+    }
   };
 
   const handleUrlSubmit = (e) => {
+    const exist = findExistingUrl();
     e.preventDefault();
 
-    if (value.trim() === "") {
-      setAlert("Please add a link");
-    } else if (findExistingUrl) {
-      console.log("Link already existed");
-    } else {
+    if (value.trim() !== "") {
       handleUrlShortener(value);
+    } else {
+      setAlert("Please add a link");
     }
     setValue("");
   };
@@ -132,8 +166,8 @@ const Form = () => {
           <TextField
             type="text"
             fullWidth
-            error={valueHelper !== "" || alert !== ""}
-            helperText={valueHelper || alert}
+            error={valueHelper !== "" || alert !== "" || existingUrl !== ""}
+            helperText={valueHelper || alert || existingUrl}
             placeholder="Shorten a link here..."
             variant="outlined"
             value={value}
