@@ -1,0 +1,9 @@
+export const GET_SHORTENED_URL = "GET_SHORTENED_URL";
+export const SET_LOADING = "SET_LOADING";
+export const SET_VALUE = "SET_VALUE";
+export const SET_VALUE_HELPER = "SET_VALUE_HELPER";
+export const SET_IS_INVALID = "SET_IS_INVALID";
+export const SET_ALERT = "SET_ALERT";
+export const SET_EXISTING_URL = "SET_EXISTING_URL";
+export const EXISTING_URL_HELPER = "EXISTING_URL_HELPER";
+export const FIND_EXISTING_URL = "FIND_EXISTING_URL";

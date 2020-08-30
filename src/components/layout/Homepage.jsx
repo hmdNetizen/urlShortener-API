@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       backgroundImage: `url(${bgBoostMobile})`,
       backgroundSize: "cover",
-      backgroundPosition: "left",
+      backgroundPosition: "center",
     },
   },
 }));
@@ -251,7 +251,11 @@ const Homepage = () => {
           style={{ marginTop: "3.5em", marginBottom: "5em" }}
         >
           <Grid item style={{ textAlign: "center" }}>
-            <Typography variant="h2" gutterBottom>
+            <Typography
+              variant="h2"
+              gutterBottom
+              style={{ fontSize: matchesXS ? "1.5rem" : undefined }}
+            >
               Advanced Statistics
             </Typography>
           </Grid>
@@ -286,7 +290,10 @@ const Homepage = () => {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="body2">
+                  <Typography
+                    align={matchesSM ? "center" : undefined}
+                    variant="body2"
+                  >
                     Boost your brand recognition with each click. Generic links
                     don’t mean a thing. Branded links help instil confidence in
                     your content.
@@ -318,7 +325,10 @@ const Homepage = () => {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="body2">
+                  <Typography
+                    align={matchesSM ? "center" : undefined}
+                    variant="body2"
+                  >
                     Gain insights into who is clicking your links. Knowing when
                     and where people engage with your content helps inform
                     better decisions.
@@ -346,7 +356,10 @@ const Homepage = () => {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="body2">
+                  <Typography
+                    align={matchesSM ? "center" : undefined}
+                    variant="body2"
+                  >
                     Improve brand awareness and content discoverability through
                     customizable links, supercharging audience engagement.
                   </Typography>

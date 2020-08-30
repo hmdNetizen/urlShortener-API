@@ -1,19 +1,29 @@
-import React, { Fragment, useState } from "react";
-import axios from "axios";
+import React, { Fragment, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import bgShorten from "../images/bg-shorten-desktop.svg";
 import ShortenedUrl from "./ShortenedUrl";
+import shortenerContext from "../context/shortenerContext/shortenerContext";
 
 const Form = () => {
-  const [alert, setAlert] = useState("");
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [existingUrl, setExistingUrl] = useState("");
+  const {
+    url,
+    value,
+    loading,
+    getShortenedUrl,
+    validateUrl,
+    setValue,
+    valueHelper,
+    isInvalid,
+    alert,
+    setAlert,
+    existingURL,
+    existingUrlHelper,
+  } = useContext(shortenerContext);
 
   const useStyles = makeStyles((theme) => ({
     inputContainer: {
@@ -77,7 +87,7 @@ const Form = () => {
 
       "&::placeholder": {
         color:
-          isInvalid || alert || existingUrl
+          isInvalid || alert || existingURL
             ? theme.palette.common.red
             : undefined,
       },
@@ -91,59 +101,12 @@ const Form = () => {
     },
   }));
   const classes = useStyles();
-  const theme = useTheme();
-  const [value, setValue] = useState("");
-  const [valueHelper, setvalueHelper] = useState("");
-  const [url, setUrl] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const validateUrl = (e) => {
-    let regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
-    let valid = regex.test(e.target.value);
-
-    setValue(e.target.value);
-
-    if (!valid) {
-      setvalueHelper("Link is not valid");
-      setIsInvalid(true);
-    } else {
-      setvalueHelper("");
-      setAlert("");
-      setIsInvalid(false);
-    }
-  };
-
-  const findExistingUrl = () => {
-    return url.length > 0 && url.some((link) => value === link.url);
-  };
-
-  const handleUrlShortener = async (inputUrl) => {
-    let exist = findExistingUrl();
-    let response;
-
-    if (exist) {
-      setExistingUrl("Link already exist");
-    } else {
-      setLoading(true);
-      try {
-        response = await axios.post("https://rel.ink/api/links/", {
-          url: inputUrl,
-        });
-        setUrl([response.data, ...url]);
-      } catch (err) {
-        console.error(err);
-      }
-      setLoading(false);
-      setExistingUrl("");
-    }
-  };
 
   const handleUrlSubmit = (e) => {
-    const exist = findExistingUrl();
     e.preventDefault();
 
     if (value.trim() !== "") {
-      handleUrlShortener(value);
+      getShortenedUrl(value);
     } else {
       setAlert("Please add a link");
     }
@@ -166,12 +129,14 @@ const Form = () => {
           <TextField
             type="text"
             fullWidth
-            error={valueHelper !== "" || alert !== "" || existingUrl !== ""}
-            helperText={valueHelper || alert || existingUrl}
+            error={
+              valueHelper !== "" || alert !== "" || existingUrlHelper !== ""
+            }
+            helperText={valueHelper || alert || existingUrlHelper}
             placeholder="Shorten a link here..."
             variant="outlined"
             value={value}
-            onChange={validateUrl}
+            onChange={(e) => validateUrl(e.target.value)}
             FormHelperTextProps={{ className: classes.helperText }}
             InputProps={{
               classes: { input: classes.formInput },

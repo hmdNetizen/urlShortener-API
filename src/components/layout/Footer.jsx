@@ -255,6 +255,30 @@ const Footer = () => {
               </a>
             </Grid>
           </Grid>
+          <Grid
+            item
+            alignItems={matchesSM ? "center" : "flex-end"}
+            container
+            direction="column"
+            style={{ marginTop: matchesSM ? "1em" : "3em" }}
+          >
+            <Grid item>
+              <Typography variant="caption">
+                Challenge by{" "}
+                <span style={{ color: theme.palette.common.red }}>
+                  Frontend Mentor
+                </span>
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="caption">
+                Coded by{" "}
+                <span style={{ color: theme.palette.common.cyan }}>
+                  Hamed Ayinde Jimoh
+                </span>
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </footer>
