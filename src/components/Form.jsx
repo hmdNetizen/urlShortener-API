@@ -105,7 +105,7 @@ const Form = () => {
   const handleUrlSubmit = (e) => {
     e.preventDefault();
 
-    if (value.trim() !== "") {
+    if (value.trim() !== "" && !isInvalid) {
       getShortenedUrl(value);
     } else {
       setAlert("Please add a link");

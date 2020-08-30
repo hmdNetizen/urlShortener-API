@@ -15,7 +15,7 @@ import {
 
 const ShortenerState = (props) => {
   const initialState = {
-    url: JSON.parse(localStorage.getItem("links")) || [],
+    url: JSON.parse(localStorage.getItem("links")) || [], //checks if there is a key with the name "link" in the local storage otherwise create it with an empty array
     loading: false,
     value: "",
     valueHelper: "",
@@ -58,6 +58,7 @@ const ShortenerState = (props) => {
   //set the progress bar to true
   const setLoading = () => dispatch({ type: SET_LOADING });
 
+  //This is necessary to avoid users from typing in non-valid URL
   const validateUrl = (url) => {
     const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
     const valid = regex.test(url);
@@ -74,44 +75,30 @@ const ShortenerState = (props) => {
     }
   };
 
+  //This deals with the value that is typed in by the user
   const setValue = (value) => dispatch({ type: SET_VALUE, payload: value });
 
+  //This is basically for setting in a text if the text typed in by user is not a valid url
   const setValueHelper = (helperText) =>
     dispatch({ type: SET_VALUE_HELPER, payload: helperText });
 
+  //This is basically for checking if the value typed in is truthy or falsy for applying error styling
   const setIsInvalid = (invalid) =>
     dispatch({ type: SET_IS_INVALID, payload: invalid });
 
+  //This handles error output is user fails to type in a url before hitting the submit button
   const setAlert = (alert) => dispatch({ type: SET_ALERT, payload: alert });
 
+  //This checks if the url typed in by a user already exist
   const findExistingURL = () =>
     state.url.length > 0 && state.url.some((link) => link.url === state.value);
 
+  //This is for returning a truthy or falsy boolean if the url already exist. It is for handling an error styling
   const setExistingURL = () => dispatch({ type: SET_EXISTING_URL });
 
+  //This handles the error text that is output if a url already exist.
   const setExistingUrlHelper = (urlHelper) =>
     dispatch({ type: EXISTING_URL_HELPER, payload: urlHelper });
-
-  //   const handleUrlShortener = async (inputUrl) => {
-  //     let exist = findExistingUrl();
-  //     let response;
-
-  //     if (exist) {
-  //       setExistingUrl("Link already exist");
-  //     } else {
-  //       setLoading(true);
-  //       try {
-  //         response = await axios.post("https://rel.ink/api/links/", {
-  //           url: inputUrl,
-  //         });
-  //         setUrl([response.data, ...url]);
-  //       } catch (err) {
-  //         console.error(err);
-  //       }
-  //       setLoading(false);
-  //       setExistingUrl("");
-  //     }
-  //   };
 
   const {
     url,
