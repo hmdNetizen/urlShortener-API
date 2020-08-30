@@ -60,7 +60,7 @@ const ShortenerState = (props) => {
 
   //This is necessary to avoid users from typing in non-valid URL
   const validateUrl = (url) => {
-    const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
+    const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi;
     const valid = regex.test(url);
 
     setValue(url);
