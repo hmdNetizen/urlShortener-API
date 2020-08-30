@@ -115,7 +115,7 @@ const Form = () => {
 
   useEffect(() => {
     localStorage.setItem("links", JSON.stringify(url));
-  });
+  }, [url]);
 
   return (
     <Fragment>

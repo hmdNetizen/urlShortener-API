@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
   },
 }));
-const Footer = () => {
+const Footer = ({ setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
@@ -59,7 +59,12 @@ const Footer = () => {
           md={3}
           style={{ marginBottom: matchesSM ? "3.5em" : 0 }}
         >
-          <Button disableRipple>
+          <Button
+            disableRipple
+            component={Link}
+            to="/"
+            onClick={() => setValue(4)}
+          >
             <img src={logo} alt="Logo" />
           </Button>
         </Grid>

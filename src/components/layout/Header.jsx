@@ -152,14 +152,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = ({ value, setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const [value, setValue] = useState(0);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const navigationTabs = [
@@ -187,7 +186,7 @@ const Header = () => {
           break;
       }
     });
-  }, [value, navigationTabs]);
+  }, [value, setValue, navigationTabs]);
 
   const tabs = (
     <Fragment>

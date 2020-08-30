@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -167,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Homepage = () => {
+const Homepage = ({ setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
@@ -223,7 +224,13 @@ const Homepage = () => {
               </Typography>
             </Grid>
             <Grid item style={{ textAlign: matchesSM ? "center" : undefined }}>
-              <Button variant="contained" className={classes.btn}>
+              <Button
+                variant="contained"
+                component={Link}
+                to="/signup"
+                onClick={() => setValue(5)}
+                className={classes.btn}
+              >
                 Get started
               </Button>
             </Grid>
@@ -391,7 +398,13 @@ const Homepage = () => {
           </Typography>
         </Grid>
         <Grid item>
-          <Button variant="contained" className={classes.btn}>
+          <Button
+            variant="contained"
+            component={Link}
+            to="/signup"
+            onClick={() => setValue(5)}
+            className={classes.btn}
+          >
             Get Started
           </Button>
         </Grid>
