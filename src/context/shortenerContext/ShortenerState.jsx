@@ -15,7 +15,7 @@ import {
 
 const ShortenerState = (props) => {
   const initialState = {
-    url: [],
+    url: JSON.parse(localStorage.getItem("links")) || [],
     loading: false,
     value: "",
     valueHelper: "",
