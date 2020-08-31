@@ -7,3 +7,5 @@ export const SET_ALERT = "SET_ALERT";
 export const SET_EXISTING_URL = "SET_EXISTING_URL";
 export const EXISTING_URL_HELPER = "EXISTING_URL_HELPER";
 export const FIND_EXISTING_URL = "FIND_EXISTING_URL";
+export const IS_HTTP = "IS_HTTP";
+export const SET_HTTP_HELPER = "SET_HTTP_HELPER";

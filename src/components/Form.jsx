@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import bgShorten from "../images/bg-shorten-desktop.svg";
 import ShortenedUrl from "./ShortenedUrl";
 import shortenerContext from "../context/shortenerContext/shortenerContext";
+import { Snackbar } from "@material-ui/core";
 
 const Form = () => {
   const {
@@ -20,9 +21,14 @@ const Form = () => {
     valueHelper,
     isInvalid,
     alert,
+    isHTTP,
     setAlert,
     existingURL,
     existingUrlHelper,
+    httpHelper,
+    setHttpHelper,
+    setIsHTTP,
+    setIsInvalid,
   } = useContext(shortenerContext);
 
   const useStyles = makeStyles((theme) => ({
@@ -87,7 +93,7 @@ const Form = () => {
 
       "&::placeholder": {
         color:
-          isInvalid || alert || existingURL
+          isInvalid || alert || existingURL || httpHelper !== ""
             ? theme.palette.common.red
             : undefined,
       },
@@ -107,9 +113,11 @@ const Form = () => {
 
     if (value.trim() !== "" && !isInvalid) {
       getShortenedUrl(value);
+      setIsInvalid(false);
     } else {
       setAlert("Please add a link");
     }
+
     setValue("");
   };
 
@@ -134,9 +142,16 @@ const Form = () => {
             type="text"
             fullWidth
             error={
-              valueHelper !== "" || alert !== "" || existingUrlHelper !== ""
+              (isInvalid && valueHelper !== "") ||
+              (isInvalid && httpHelper !== "") ||
+              (isInvalid && alert !== "") ||
+              (isInvalid && existingUrlHelper !== "")
             }
-            helperText={valueHelper || alert || existingUrlHelper}
+            helperText={
+              isInvalid
+                ? valueHelper || httpHelper || alert || existingUrlHelper
+                : ""
+            }
             placeholder="Shorten a link here..."
             variant="outlined"
             value={value}

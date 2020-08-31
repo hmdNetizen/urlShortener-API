@@ -7,6 +7,8 @@ import {
   SET_ALERT,
   SET_EXISTING_URL,
   EXISTING_URL_HELPER,
+  SET_HTTP_HELPER,
+  IS_HTTP,
 } from "./../Types";
 
 export default (state, action) => {
@@ -16,6 +18,7 @@ export default (state, action) => {
         ...state,
         url: [action.payload, ...state.url],
         loading: false,
+        isInvalid: false,
       };
     case SET_LOADING:
       return {
@@ -41,8 +44,8 @@ export default (state, action) => {
       return {
         ...state,
         alert: action.payload,
+        isInvalid: true,
       };
-
     case SET_EXISTING_URL:
       return {
         ...state,
@@ -53,6 +56,12 @@ export default (state, action) => {
         ...state,
         existingUrlHelper: action.payload,
       };
+    case SET_HTTP_HELPER:
+      return {
+        ...state,
+        httpHelper: action.payload,
+      };
+
     default:
       return state;
   }
