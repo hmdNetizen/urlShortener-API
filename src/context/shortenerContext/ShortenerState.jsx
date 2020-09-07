@@ -11,8 +11,6 @@ import {
   SET_ALERT,
   SET_EXISTING_URL,
   EXISTING_URL_HELPER,
-  SET_HTTP_HELPER,
-  IS_HTTP,
 } from "./../Types";
 
 const ShortenerState = (props) => {
@@ -25,7 +23,6 @@ const ShortenerState = (props) => {
     isInvalid: false,
     existingURL: false,
     existingUrlHelper: "",
-    httpHelper: "",
   };
   const [state, dispatch] = useReducer(shortenerReducer, initialState);
 
@@ -50,7 +47,6 @@ const ShortenerState = (props) => {
         console.error(err);
       }
       setExistingUrlHelper("");
-      setAlert("");
     }
 
     dispatch({
@@ -64,22 +60,18 @@ const ShortenerState = (props) => {
 
   //This is necessary to avoid users from typing in non-valid URL
   const validateUrl = (url) => {
-    const regexHTTP = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi;
-    const validHTTP = regexHTTP.test(url);
-    const validNonHTTP = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+    const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi;
+    const valid = regex.test(url);
 
     setValue(url);
 
-    if (!validHTTP) {
+    if (!valid) {
       setValueHelper("Link is not valid");
-      setIsInvalid(true);
-    } else if (!validHTTP && validNonHTTP && url.slice(0, 4) === "www.") {
-      setHttpHelper('Please Prefix URL with "http://" or "https://"');
       setIsInvalid(true);
     } else {
       setValueHelper("");
+      setAlert("");
       setIsInvalid(false);
-      setHttpHelper("");
     }
   };
 
@@ -108,9 +100,6 @@ const ShortenerState = (props) => {
   const setExistingUrlHelper = (urlHelper) =>
     dispatch({ type: EXISTING_URL_HELPER, payload: urlHelper });
 
-  const setHttpHelper = (http) =>
-    dispatch({ type: SET_HTTP_HELPER, payload: http });
-
   const {
     url,
     loading,
@@ -120,7 +109,6 @@ const ShortenerState = (props) => {
     alert,
     existingURL,
     existingUrlHelper,
-    httpHelper,
   } = state;
 
   return (
@@ -134,8 +122,6 @@ const ShortenerState = (props) => {
         alert,
         existingURL,
         existingUrlHelper,
-        httpHelper,
-
         getShortenedUrl,
         validateUrl,
         setValue,
@@ -145,7 +131,6 @@ const ShortenerState = (props) => {
         findExistingURL,
         setExistingURL,
         setExistingUrlHelper,
-        setHttpHelper,
       }}
     >
       {props.children}

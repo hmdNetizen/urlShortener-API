@@ -93,15 +93,20 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: "3em 1.5em 2em",
-    width: "25em",
-    minWidth: "25em",
-    maxWidth: "30em",
+    width: "22em",
+    minWidth: "20em",
+    maxWidth: "25em",
     height: "20em",
     position: "relative",
     zIndex: "9",
     margin: "0 auto",
 
     [theme.breakpoints.down("md")]: {
+      minWidth: "25em",
+      maxWidth: "30em",
+    },
+
+    [theme.breakpoints.down("sm")]: {
       minWidth: "30em",
     },
 
@@ -172,6 +177,7 @@ const Homepage = ({ setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesMDonly = useMediaQuery(theme.breakpoints.only("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
@@ -277,10 +283,10 @@ const Homepage = ({ setValue }) => {
           item
           container
           direction={matchesSM ? "column" : "row"}
-          justify={matchesSM ? "center" : undefined}
+          justify={matchesMD ? "center" : undefined}
           style={{ position: "relative" }}
         >
-          <Grid item md>
+          <Grid item md={6} lg>
             <Paper classes={{ root: classes.paper }}>
               <Grid container direction="column" justify="space-between">
                 <Grid item>
@@ -309,7 +315,7 @@ const Homepage = ({ setValue }) => {
               </Grid>
             </Paper>
           </Grid>
-          <Grid item md>
+          <Grid item md={6} lg>
             <Paper
               style={{
                 marginRight: matchesSM ? "auto" : "2em",
@@ -344,7 +350,7 @@ const Homepage = ({ setValue }) => {
               </Grid>
             </Paper>
           </Grid>
-          <Grid item md>
+          <Grid item md={12} lg>
             <Paper
               classes={{ root: classes.paper }}
               style={{ marginTop: matchesMD ? "7em" : "5em" }}
