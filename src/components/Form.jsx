@@ -133,6 +133,8 @@ const Form = () => {
           <TextField
             type="text"
             fullWidth
+            name="Shorten URL"
+            aria-label="Paste in your long URL"
             error={
               valueHelper !== "" || alert !== "" || existingUrlHelper !== ""
             }

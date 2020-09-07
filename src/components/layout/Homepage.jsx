@@ -177,7 +177,6 @@ const Homepage = ({ setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
-  const matchesMDonly = useMediaQuery(theme.breakpoints.only("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
