@@ -16,6 +16,7 @@ export default (state, action) => {
         ...state,
         url: [action.payload, ...state.url],
         loading: false,
+        existingURL: false,
       };
     case SET_LOADING:
       return {

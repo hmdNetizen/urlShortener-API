@@ -14,7 +14,6 @@ const Form = () => {
     url,
     value,
     loading,
-    getShortenedUrl,
     validateUrl,
     setValue,
     valueHelper,
@@ -23,6 +22,7 @@ const Form = () => {
     setAlert,
     existingURL,
     existingUrlHelper,
+    getShortenedURL,
   } = useContext(shortenerContext);
 
   const useStyles = makeStyles((theme) => ({
@@ -106,7 +106,7 @@ const Form = () => {
     e.preventDefault();
 
     if (value.trim() !== "" && !isInvalid) {
-      getShortenedUrl(value);
+      getShortenedURL(value);
     } else {
       setAlert("Please add a link");
     }

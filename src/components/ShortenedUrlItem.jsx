@@ -92,7 +92,7 @@ const ShortenedUrlItem = ({ link }) => {
     >
       <Grid item style={{ maxWidth: matchesSM ? "100%" : undefined }}>
         <Typography variant="body2" className={classes.originalUrl}>
-          {link.url}
+          {link.destination}
         </Typography>
         {matchesSM && (
           <Divider
@@ -121,10 +121,12 @@ const ShortenedUrlItem = ({ link }) => {
             }}
           >
             <a
-              href={`https://rel.ink/${link.hashid}`}
+              href={link.shortUrl}
               className={classes.shortUrl}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              {`https://rel.ink/${link.hashid}`}
+              {link.shortUrl}
             </a>
           </Grid>
           <Grid
@@ -137,7 +139,7 @@ const ShortenedUrlItem = ({ link }) => {
             }}
           >
             <CopyToClipboard
-              text={`https://rel.ink/${link.hashid}`}
+              text={link.shortUrl}
               onCopy={() => setCopied(!copied)}
             >
               <Button

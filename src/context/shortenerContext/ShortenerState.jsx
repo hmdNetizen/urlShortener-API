@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import axios from "axios";
 import shortenerContext from "./shortenerContext";
 import shortenerReducer from "./shortenerReducer";
 import {
@@ -27,32 +26,39 @@ const ShortenerState = (props) => {
   const [state, dispatch] = useReducer(shortenerReducer, initialState);
 
   //Returns the the short url after sending the long url
-  const getShortenedUrl = async (inputUrl) => {
+  const getShortenedURL = (link) => {
     let exist = findExistingURL();
-    let response;
+    const data = {
+      destination: link,
+      apikey: process.env.REACT_APP_REBRANDLY_API_KEY,
+    };
+
     if (exist) {
       setExistingURL();
       setExistingUrlHelper("Link already exist");
       return;
     } else {
       setLoading();
-      try {
-        response = await axios.post(
-          "https://cors-anywhere.herokuapp.com/https://rel.ink/api/links/",
-          {
-            url: inputUrl,
-          }
-        );
-      } catch (err) {
-        console.error(err);
-      }
+      fetch("https://api.rebrandly.com/v1/links", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch({
+            type: GET_SHORTENED_URL,
+            payload: data,
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
       setExistingUrlHelper("");
     }
-
-    dispatch({
-      type: GET_SHORTENED_URL,
-      payload: response.data,
-    });
   };
 
   //set the progress bar to true
@@ -72,6 +78,7 @@ const ShortenerState = (props) => {
       setValueHelper("");
       setAlert("");
       setIsInvalid(false);
+      setExistingUrlHelper("");
     }
   };
 
@@ -91,7 +98,8 @@ const ShortenerState = (props) => {
 
   //This checks if the url typed in by a user already exist
   const findExistingURL = () =>
-    state.url.length > 0 && state.url.some((link) => link.url === state.value);
+    state.url.length > 0 &&
+    state.url.some((link) => link.destination === state.value);
 
   //This is for returning a truthy or falsy boolean if the url already exist. It is for handling an error styling
   const setExistingURL = () => dispatch({ type: SET_EXISTING_URL });
@@ -122,9 +130,9 @@ const ShortenerState = (props) => {
         alert,
         existingURL,
         existingUrlHelper,
-        getShortenedUrl,
         validateUrl,
         setValue,
+        getShortenedURL,
         setValueHelper,
         setIsInvalid,
         setAlert,
