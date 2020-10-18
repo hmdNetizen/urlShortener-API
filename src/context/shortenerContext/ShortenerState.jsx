@@ -30,7 +30,7 @@ const ShortenerState = (props) => {
     let exist = findExistingURL();
     const data = {
       destination: link,
-      apikey: process.env.REACT_APP_REBRANDLY_API_KEY,
+      apikey: "080edaf3b0bc43f5b6b704e7a9e9660d",
     };
 
     if (exist) {
