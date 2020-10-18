@@ -14,10 +14,10 @@ import {
 
 let apiKey;
 
-if (process.env.NODE_ENV === "production") {
-  apiKey = process.env.REBRANDLY_API_KEY;
-} else {
+if (process.env.NODE_ENV !== "production") {
   apiKey = process.env.REACT_APP_REBRANDLY_API_KEY;
+} else {
+  apiKey = process.env.REBRANDLY_API_KEY;
 }
 
 const ShortenerState = (props) => {
