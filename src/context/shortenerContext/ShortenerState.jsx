@@ -12,13 +12,13 @@ import {
   EXISTING_URL_HELPER,
 } from "./../Types";
 
-let apiKey;
+// let apiKey;
 
-if (process.env.NODE_ENV !== "production") {
-  apiKey = process.env.REACT_APP_REBRANDLY_API_KEY;
-} else {
-  apiKey = process.env.REBRANDLY_API_KEY;
-}
+// if (process.env.NODE_ENV !== "production") {
+//   apiKey = process.env.REACT_APP_REBRANDLY_API_KEY;
+// } else {
+//   apiKey = process.env.REBRANDLY_API_KEY;
+// }
 
 const ShortenerState = (props) => {
   const initialState = {
@@ -38,7 +38,7 @@ const ShortenerState = (props) => {
     let exist = findExistingURL();
     const data = {
       destination: link,
-      apikey: apiKey,
+      apikey: "080edaf3b0bc43f5b6b704e7a9e9660d",
     };
 
     if (exist) {
