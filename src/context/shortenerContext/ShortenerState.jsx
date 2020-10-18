@@ -12,6 +12,14 @@ import {
   EXISTING_URL_HELPER,
 } from "./../Types";
 
+let apiKey;
+
+if (process.env.NODE_ENV !== "production") {
+  apiKey = process.env.REACT_APP_REBRANDLY_API_KEY;
+} else {
+  apiKey = process.env.REBRANDLY_API_KEY;
+}
+
 const ShortenerState = (props) => {
   const initialState = {
     url: JSON.parse(localStorage.getItem("links")) || [], //checks if there is a key with the name "link" in the local storage otherwise create it with an empty array
@@ -30,7 +38,7 @@ const ShortenerState = (props) => {
     let exist = findExistingURL();
     const data = {
       destination: link,
-      apikey: "080edaf3b0bc43f5b6b704e7a9e9660d",
+      apikey: apiKey,
     };
 
     if (exist) {

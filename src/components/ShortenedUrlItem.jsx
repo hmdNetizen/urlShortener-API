@@ -121,7 +121,7 @@ const ShortenedUrlItem = ({ link }) => {
             }}
           >
             <a
-              href={link.shortUrl}
+              href={`https://www.${link.shortUrl}`}
               className={classes.shortUrl}
               target="_blank"
               rel="noopener noreferrer"
